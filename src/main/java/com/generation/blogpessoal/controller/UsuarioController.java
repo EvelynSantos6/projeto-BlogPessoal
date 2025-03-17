@@ -27,7 +27,7 @@ import jakarta.validation.Valid;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UsuarioController {
 
-	@Autowired
+	@Autowired 
 	private UsuarioService usuarioService;
 
 	@Autowired

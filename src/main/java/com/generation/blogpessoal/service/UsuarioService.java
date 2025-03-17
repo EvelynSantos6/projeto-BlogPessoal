@@ -27,29 +27,33 @@ public class UsuarioService {
 
     @Autowired
     private AuthenticationManager authenticationManager;
-
+    
+    //método que garante que o usuário não está sendo duplicado (mesmos dados)
 	public Optional<Usuario> cadastrarUsuario(Usuario usuario) {
 
+		//SELECT* FROM tb_usuarios where = "evelyn@gmail.com"
 		if (usuarioRepository.findByUsuario(usuario.getUsuario()).isPresent())
-			return Optional.empty();
+			return Optional.empty(); //verifica se o usuário está presente
 
 		usuario.setSenha(criptografarSenha(usuario.getSenha()));
 
 		return Optional.of(usuarioRepository.save(usuario));
 	
 	}
-
+	
 	public Optional<Usuario> atualizarUsuario(Usuario usuario) {
 		
 		if(usuarioRepository.findById(usuario.getId()).isPresent()) {
-
+			
+			//usuario cadastrado evelyn@email.com -- jacque
 			Optional<Usuario> buscaUsuario = usuarioRepository.findByUsuario(usuario.getUsuario());
 
 			if ( (buscaUsuario.isPresent()) && ( buscaUsuario.get().getId() != usuario.getId()))
 				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Usuário já existe!", null);
 
 			usuario.setSenha(criptografarSenha(usuario.getSenha()));
-
+			
+			//salvav a senha criptografada
 			return Optional.ofNullable(usuarioRepository.save(usuario));
 			
 		}
@@ -57,11 +61,13 @@ public class UsuarioService {
 		return Optional.empty();
 	
 	}	
-
+	
+	
 	public Optional<UsuarioLogin> autenticarUsuario(Optional<UsuarioLogin> usuarioLogin) {
         
         // Gera o Objeto de autenticação
-		var credenciais = new UsernamePasswordAuthenticationToken(usuarioLogin.get().getUsuario(), usuarioLogin.get().getSenha());
+		var credenciais = new UsernamePasswordAuthenticationToken(usuarioLogin.get()
+				.getUsuario(), usuarioLogin.get().getSenha());
 		
         // Autentica o Usuario
 		Authentication authentication = authenticationManager.authenticate(credenciais);
@@ -92,7 +98,7 @@ public class UsuarioService {
 		return Optional.empty();
 
     }
-
+	
 	private String criptografarSenha(String senha) {
 
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
