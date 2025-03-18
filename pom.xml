@@ -15,7 +15,7 @@
 	<name>blogpessoal</name>
 	<description>Projeto Blog Pessoal</description>
 	<url />
-	<licenses>
+	<licenses>	
 		<license />
 	</licenses>
 	<developers>
@@ -98,6 +98,17 @@
 			<artifactId>helloworld</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		<!-- Dependência para Geração do Swagger -->
+	<dependency>
+		<groupId>org.springdoc</groupId>
+		<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+		<version>2.2.0</version>
+	 </dependency>
+		 <!-- Dependência do Banco de dados PostgreSQL -->
+	<dependency>
+	<groupId>org.postgresql</groupId>
+	<artifactId>postgresql</artifactId>
+	</dependency>
 	</dependencies>
 
 	<build>
